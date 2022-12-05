@@ -4,9 +4,10 @@
  * _str_n_cmp - copmare n characters of 2 strings
  * @s1: first string
  * @s2: second string
- * Return: 0 if the same, -1 if not 
+ * @n: number of characters to be copied
+ * Return: 0 if the same, -1 if not
  */
-int _str_n_cmp(char *s1, char*s2, int n)
+int _str_n_cmp(char *s1, char *s2, int n)
 {
 	int i = 0;
 
@@ -25,8 +26,8 @@ int _str_n_cmp(char *s1, char*s2, int n)
 int _printenv(void)
 {
 	char **env;
-	env = environ;
 
+	env = environ;
 	while (*env)
 	{
 		write(1, *env, sizeof(char) * _strlen(*env));
@@ -35,14 +36,15 @@ int _printenv(void)
 	}
 	return (0);
 }
-/** _getenv - gets the typed env variable by comparingthe 2 strings together
+/**
+ * _getenv - gets the typed env variable by comparingthe 2 strings together
  * @name: name containg the string variable
  * Return: returns env variable path if found, otherwise NULL if not
  */
 char *_getenv(char *name)
 {
 	char **env;
-	int len =_strlen(name);
+	int len = _strlen(name);
 
 	for (env = environ; *env; ++env)
 	{
@@ -51,7 +53,8 @@ char *_getenv(char *name)
 	}
 	return (NULL);
 }
-/** command_path - reads the path of command inputed by the user, tokenizes
+/**
+ * command_path - reads the path of command inputed by the user, tokenizes
  * path into a valid format, then concatenates the whole string as needed in
  * order to read full command path and returns new string
  * @cmd: command inputed
@@ -82,7 +85,7 @@ char *command_path(char *cmd)
 		if (_strcmp(new_path, "/bin") == 0)
 		{
 			_strcat(new_path, "/");
-			_strcat(new_path,cmd);
+			_strcat(new_path, cmd);
 			_strcat(new_path, "\0");
 			return (new_path);
 		}
@@ -92,8 +95,9 @@ char *command_path(char *cmd)
 }
 
 /**
- * execute - creates the pid, checks if the command exists and then executes it using execve
- * @cmd_array - array that conists the path of the command and its arguments
+ * execute - creates the pid,
+ * checks if the command exists and then executes it using execve
+ * @cmd_array: array that conists the path of the command and its arguments
  * Return: 0 if command is executed properly and 1 if something went wrong
  */
 int execute(char *cmd_array[])
@@ -128,6 +132,6 @@ int execute(char *cmd_array[])
 		wait(&status);
 	my_pid = getpid();
 	if (my_pid == 0)
-		write (2, "Pid can't be 0\n",16);
+		write(2, "Pid can't be 0\n", 16);
 	return (0);
 }

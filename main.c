@@ -40,7 +40,8 @@ int command_read(char *s, int __attribute__((unused)) characters)
 }
 
 /**
- * main - simple shell, allocate memory to get the user input, call functions to read the commands, locate them and then execute
+ * main - simple shell, allocate memory to get the user input,
+ * call functions to read the commands, locate them and then execute
  * Return: -1 on failure and 0 for exit
  */
 int main(void)
