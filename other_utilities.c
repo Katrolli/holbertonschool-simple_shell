@@ -75,7 +75,6 @@ char *command_path(char *cmd)
 		return (NULL);
 	}
 	token = strtok(path, s);
-	free(path);
 	while (token != NULL)
 	{
 		path_array[i] = token;
@@ -122,7 +121,6 @@ int execute(char *cmd_array[])
 			if (exe == -1)
 			{
 				write(2, "Coulnd't find command\n", 23);
-				free(cmd_array);
 				return (1);
 			}
 		}
@@ -135,10 +133,6 @@ int execute(char *cmd_array[])
 		}
 	}
 	else
-	{
 		wait(&status);
-		free(cmd_array);
-	}
-	free(cmd_array);
 	return (0);
 }
