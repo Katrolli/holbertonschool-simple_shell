@@ -1,4 +1,4 @@
-#include main.h
+#include "main.h"
 
 /**
  * command_read - reads user input, tokenizes the string and fills up the array
@@ -29,7 +29,7 @@ int command_read(char *s, int __attribute__((unused)) characters)
 	cmd_array[i] = NULL;
 	while (cmd_array[j] != NULL)
 	{
-		if (j = 0)
+		if (j == 0)
 			tmp[j] = command_path(cmd_array[0]);
 		else
 			tmp[j] = cmd_array[j];
@@ -47,7 +47,7 @@ int main(void)
 {
 	char *buffer;
 	size_t characters, size = 1024;
-	int i = 0;
+	size_t i = 0, j = -1;
 
 	buffer = (char *)malloc(sizeof(char) * size);
 	if (buffer == NULL)
@@ -57,16 +57,16 @@ int main(void)
 		if (isatty(STDIN_FILENO) == 1)
 			write(1, "$ ", 2);
 		characters = getline(&buffer, &size, stdin);
-		if (characters == -1)
+		if (characters == j)
 		{
 			if (isatty(STDIN_FILENO) == 1)
 				write(1, "Unexplained Error", 18);
 			break;
 		}
-		if (*buffer = '\0')
+		if (*buffer == '\0')
 			continue;
 		if (buffer[characters - 1] == '\n')
-			buffer[characters - 1 = '\0'];
+			buffer[characters - 1] = '\0';
 		if (command_read(buffer, characters) == 2)
 			return (0);
 	}

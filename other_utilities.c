@@ -16,7 +16,7 @@ int _str_n_cmp(char *s1, char*s2, int n)
 			return (-1);
 		i++;
 	}
-	return (0)
+	return (0);
 }
 /**
  * _printenv - prints the full env variables
@@ -25,7 +25,7 @@ int _str_n_cmp(char *s1, char*s2, int n)
 int _printenv(void)
 {
 	char **env;
-	env == environ;
+	env = environ;
 
 	while (*env)
 	{
@@ -46,7 +46,7 @@ char *_getenv(char *name)
 
 	for (env = environ; *env; ++env)
 	{
-		if (_str_cmp(name, *env, len) == 0)
+		if (_str_n_cmp(name, *env, len) == 0)
 			return (*env);
 	}
 	return (NULL);
@@ -68,7 +68,7 @@ char *command_path(char *cmd)
 	new_path = malloc(sizeof(char) * 1024);
 	if (new_path == NULL)
 		return (NULL);
-	token = strok(path, s);
+	token = strtok(path, s);
 	while (token != NULL)
 	{
 		path_array[i] = token;
@@ -86,7 +86,7 @@ char *command_path(char *cmd)
 			_strcat(new_path, "\0");
 			return (new_path);
 		}
-		i++
+		i++;
 	}
 	return (NULL);
 }
@@ -98,7 +98,7 @@ char *command_path(char *cmd)
  */
 int execute(char *cmd_array[])
 {
-	int exe, status, j = 0; i = 0;
+	int exe, status;
 	pid_t my_pid;
 	pid_t child_pid;
 
@@ -111,7 +111,7 @@ int execute(char *cmd_array[])
 	{
 		if (**environ)
 		{
-			exe = execve(cmd_array[0]. cmd_array, environ);
+			exe = execve(cmd_array[0], cmd_array, environ);
 			if (exe == -1)
 				write(2, "Couldn't find command\n", 23);
 			return (1);

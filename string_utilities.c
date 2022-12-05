@@ -50,7 +50,7 @@ char *_strcpy(char *dest, char *src)
 	{
 		dest[i] = src[i];
 	}
-	return dest[i];
+	return (dest);
 }
 
 /**
@@ -80,7 +80,7 @@ char *_strdup(char *str)
  * @s2: second string
  * Return: 0 if the same, 1 if s1 > s2, -1 if s1 < s2
  */
-int *_strcmp(char *s1, char *s2)
+int _strcmp(char *s1, char *s2)
 {
 	int i = 0, len1, len2;
 
