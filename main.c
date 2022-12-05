@@ -20,6 +20,7 @@ int command_read(char *s, int __attribute__((unused)) characters)
 	if (_strcmp(temp, "env") == 0)
 		return (_printenv());
 	token = strtok(temp, delim);
+	free(temp);
 	while (token != NULL)
 	{
 		cmd_array[i] = token;
@@ -50,11 +51,14 @@ int main(void)
 	size_t characters, size = 1024;
 	size_t i = 0, j = -1;
 
-	buffer = (char *)malloc(sizeof(char) * size);
-	if (buffer == NULL)
-		return (-1);
 	while (i < 1)
 	{
+		buffer = (char *)malloc(sizeof(char) * size);
+		if (buffer == NULL)
+		{
+			free(buffer);
+			return (-1);
+		}
 		if (isatty(STDIN_FILENO) == 1)
 			write(1, "$ ", 2);
 		characters = getline(&buffer, &size, stdin);
@@ -69,9 +73,11 @@ int main(void)
 		if (buffer[characters - 1] == '\n')
 			buffer[characters - 1] = '\0';
 		if (command_read(buffer, characters) == 2)
+		{
 			return (0);
+		}
+			free (buffer);
 	}
-	free(buffer);
 	buffer = NULL;
 	return (0);
 }

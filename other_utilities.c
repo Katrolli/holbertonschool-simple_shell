@@ -70,8 +70,12 @@ char *command_path(char *cmd)
 
 	new_path = malloc(sizeof(char) * 1024);
 	if (new_path == NULL)
+	{
+		free(new_path);
 		return (NULL);
+	}
 	token = strtok(path, s);
+	free(path);
 	while (token != NULL)
 	{
 		path_array[i] = token;
@@ -103,7 +107,6 @@ char *command_path(char *cmd)
 int execute(char *cmd_array[])
 {
 	int exe, status;
-	pid_t my_pid;
 	pid_t child_pid;
 
 	child_pid = fork();
@@ -117,8 +120,11 @@ int execute(char *cmd_array[])
 		{
 			exe = execve(cmd_array[0], cmd_array, environ);
 			if (exe == -1)
-				write(2, "Couldn't find command\n", 23);
-			return (1);
+			{
+				write(2, "Coulnd't find command\n", 23);
+				free(cmd_array);
+				return (1);
+			}
 		}
 		else
 		{
@@ -129,9 +135,10 @@ int execute(char *cmd_array[])
 		}
 	}
 	else
+	{
 		wait(&status);
-	my_pid = getpid();
-	if (my_pid == 0)
-		write(2, "Pid can't be 0\n", 16);
+		free(cmd_array);
+	}
+	free(cmd_array);
 	return (0);
 }
