@@ -30,7 +30,7 @@ int _printenv(void)
 
 	while (str[i] != '\0')
 	{
-		write(1, str, _strlen(str));
+		write(1, str, strlen(str));
 		write(1, "\n", 1);
 		str = environ[i];
 		++i;
@@ -44,12 +44,12 @@ int _printenv(void)
  */
 char *_getenv(char *name)
 {
-	int len = _strlen(name);
+	int len = strlen(name);
 	int i;
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		if (_str_n_cmp(environ[i], name, len) == 0)
+		if (strncmp(environ[i], name, len) == 0)
 			return (&environ[i][len]);
 	}
 	return (NULL);
@@ -82,10 +82,10 @@ char *command_path(char *cmd)
 	i = 0;
 	while (path_array[i] != NULL)
 	{
-		_strcpy(new_path, path_array[i]);
-		_strcat(new_path, "/");
-		_strcat(new_path, cmd);
-		_strcat(new_path, "\0");
+		strcpy(new_path, path_array[i]);
+		strcat(new_path, "/");
+		strcat(new_path, cmd);
+		strcat(new_path, "\0");
 		if (stat(new_path, &buf) == 0)
 		{
 			free(path);
@@ -108,9 +108,18 @@ char *command_path(char *cmd)
  */
 int execute(char *cmd_array[])
 {
+	char *exe_path = NULL;
+	char *cmd = NULL;
 	int exe, status;
 	pid_t child_pid;
 
+	cmd = cmd_array[0];
+	exe_path = command_path(cmd);
+	if (exe_path == NULL)
+	{
+		perror("wromng command");
+		return (3);
+	}
 	child_pid = fork();
 	if (child_pid == -1)
 	{
@@ -118,25 +127,15 @@ int execute(char *cmd_array[])
 	}
 	if (child_pid == 0)
 	{
-		if (**environ)
-		{
-			exe = execve(cmd_array[0], cmd_array, environ);
+			exe = execve(exe_path, cmd_array, environ);
 			if (exe == -1)
 			{
 				write(2, "Coulnd't find command\n", 23);
 				return (1);
 			}
-		}
-		else
-		{
-			exe = execve(cmd_array[0], cmd_array, NULL);
-			if (exe == -1)
-				write(2, "Error\n", 7);
-			return (1);
-		}
 	}
 	else
 		wait(&status);
-	free(cmd_array[0]);
+	free(exe_path);
 	return (0);
 }

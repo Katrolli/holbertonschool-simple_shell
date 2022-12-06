@@ -13,10 +13,10 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
 	char *token, *temp;
 	int i = 0;
 
-	temp = _strdup(s);
-	if (_strcmp(temp, "exit") == 0)
+	temp = strdup(s);
+	if (strcmp(temp, "exit") == 0)
 		return (2);
-	if (_strcmp(temp, "env") == 0)
+	if (strcmp(temp, "env") == 0)
 		return (_printenv());
 	token = strtok(temp, delim);
 	while (token != NULL)
@@ -26,11 +26,6 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
 		i++;
 	}
 	cmd_array[i] = NULL;
-	if (_str_n_cmp(cmd_array[0], "/bin", 4) == 0)
-	{
-		return (execute(cmd_array));
-	}
-	cmd_array[0] = command_path(cmd_array[0]);
 	return (execute(cmd_array));
 }
 
