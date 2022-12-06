@@ -25,14 +25,15 @@ int _str_n_cmp(char *s1, char *s2, int n)
  */
 int _printenv(void)
 {
-	char **env;
+	char *str = environ[0];
+	int i = 0; /* Hostname printed twice if i is initalized 0 */
 
-	env = environ;
-	while (*env)
+	while (str[i] != '\0')
 	{
-		write(1, *env, sizeof(char) * _strlen(*env));
+		write(1, str, _strlen(str));
 		write(1, "\n", 1);
-		++env;
+		str = environ[i];
+		++i;
 	}
 	return (0);
 }
