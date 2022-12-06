@@ -9,10 +9,9 @@
 int command_read(char *s, int __attribute__((unused)) characters)
 {
 	char *cmd_array[100];
-	char *tmp[100];
 	const char delim[2] = " ";
 	char *token, *temp;
-	int i = 0, j = 0;
+	int i = 0;
 
 	temp = _strdup(s);
 	if (_strcmp(temp, "exit") == 0)
@@ -28,17 +27,11 @@ int command_read(char *s, int __attribute__((unused)) characters)
 	}
 	cmd_array[i] = NULL;
 	if (_str_n_cmp(cmd_array[0], "/bin", 4) == 0)
-		return (execute(cmd_array));
-	while (cmd_array[j] != NULL)
 	{
-		if (j == 0)
-			tmp[j] = command_path(cmd_array[0]);
-		else
-			tmp[j] = cmd_array[j];
-		j++;
+		return (execute(cmd_array));
 	}
-	tmp[j] = NULL;
-	return (execute(tmp));
+	cmd_array[0] = command_path(cmd_array[0]);
+	return (execute(cmd_array));
 }
 
 /**
