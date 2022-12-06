@@ -14,7 +14,7 @@ char *_strcpy(char *dest, char *src);
 char *_strdup(char *str);
 int _strcmp(char *s1, char *s2);
 int _str_n_cmp(char *s1, char *s2, int n);
-int command_read(char *s, int __attribute__((unused)) characters);
+int command_read(char *s, size_t __attribute__((unused)) characters);
 int execute(char *cmd_arr[]);
 int _printenv(void);
 char *_getenv(char *name);
