@@ -43,13 +43,13 @@ int _printenv(void)
  */
 char *_getenv(char *name)
 {
-	char **env;
 	int len = _strlen(name);
+	int i;
 
-	for (env = environ; *env; ++env)
+	for (i = 0; environ[i] != NULL; i++)
 	{
-		if (_str_n_cmp(name, *env, len) == 0)
-			return (*env);
+		if (_str_n_cmp(environ[i], name, len) == 0)
+			return (&environ[i][len]);
 	}
 	return (NULL);
 }
