@@ -62,38 +62,40 @@ char *_getenv(char *name)
  */
 char *command_path(char *cmd)
 {
-	char *path = _strdup(_getenv("PATH"));
-	char *token, *new_path;
-	const char s[2] = ":";
+	char *path = strdup(_getenv("PATH"));
+	char *token = strtok(path, ":"), *new_path;
 	char *path_array[100];
+	struct stat buf;
 	int i = 0;
 
-	new_path = malloc(sizeof(char) * 1024);
-	if (new_path == NULL)
-	{
-		free(new_path);
-		return (NULL);
-	}
-	token = strtok(path, s);
+	new_path = malloc(sizeof(char) * 100);
+	if (_getenv("PATH")[0] == ':')
+		if (stat(cmd, &buf) == 0)
+			return (strdup(cmd));
 	while (token != NULL)
 	{
 		path_array[i] = token;
 		i++;
-		token = strtok(NULL, s);
+		token = strtok(NULL, ":");
 	}
 	i = 0;
 	while (path_array[i] != NULL)
 	{
-		new_path = path_array[i];
-		if (_strcmp(new_path, "/bin") == 0)
+		_strcpy(new_path, path_array[i]);
+		_strcat(new_path, "/");
+		_strcat(new_path, cmd);
+		_strcat(new_path, "\0");
+		if (stat(new_path, &buf) == 0)
 		{
-			_strcat(new_path, "/");
-			_strcat(new_path, cmd);
-			_strcat(new_path, "\0");
+			free(path);
 			return (new_path);
 		}
 		i++;
 	}
+	free(path);
+	free(new_path);
+	if (stat(cmd, &buf) == 0)
+		return (strdup(cmd));
 	return (NULL);
 }
 
@@ -134,5 +136,6 @@ int execute(char *cmd_array[])
 	}
 	else
 		wait(&status);
+	free(cmd_array[0]);
 	return (0);
 }
