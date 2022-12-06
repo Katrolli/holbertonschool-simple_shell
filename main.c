@@ -27,6 +27,8 @@ int command_read(char *s, int __attribute__((unused)) characters)
 		i++;
 	}
 	cmd_array[i] = NULL;
+	if (_str_n_cmp(cmd_array[0], "/bin", 4) == 0)
+		return (execute(cmd_array));
 	while (cmd_array[j] != NULL)
 	{
 		if (j == 0)
