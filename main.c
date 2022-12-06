@@ -6,7 +6,7 @@
  * @characters: len of s
  * Return: int of execute function
  */
-int command_read(char *s, int __attribute__((unused)) characters)
+int command_read(char *s, size_t __attribute__((unused)) characters)
 {
 	char *cmd_array[100];
 	const char delim[2] = " ";
