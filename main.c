@@ -54,7 +54,6 @@ int main(void)
 	}
 	while (i < 1)
 	{
-		
 		if (isatty(STDIN_FILENO) == 1)
 			write(1, "$ ", 2);
 		characters = getline(&buffer, &size, stdin);
