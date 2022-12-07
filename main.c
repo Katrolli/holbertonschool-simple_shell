@@ -13,11 +13,17 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
 	char *token, *temp;
 	int i = 0;
 
-	temp = strdup(s);
-	if (strcmp(temp, "exit") == 0)
+	temp = _strdup(s);
+	if (_strcmp(temp, "exit") == 0)
+	{
+		free(temp);
 		return (2);
-	if (strcmp(temp, "env") == 0)
+	}
+	if (_strcmp(temp, "env") == 0)
+	{
+		free(temp);
 		return (_printenv());
+	}
 	token = strtok(temp, delim);
 	while (token != NULL)
 	{
@@ -40,8 +46,15 @@ int main(void)
 	size_t characters, size = 1024;
 	size_t i = 0, j = -1;
 
+	buffer = (char *)malloc(sizeof(char) * size);
+	if (buffer == NULL)
+	{
+		free(buffer);
+		return (-1);
+	}
 	while (i < 1)
 	{
+		
 		if (isatty(STDIN_FILENO) == 1)
 			write(1, "$ ", 2);
 		characters = getline(&buffer, &size, stdin);
@@ -56,7 +69,11 @@ int main(void)
 		if (buffer[characters - 1] == '\n')
 			buffer[characters - 1] = '\0';
 		if (command_read(buffer, characters) == 2)
+		{
+			free(buffer);
+			buffer = NULL;
 			return (0);
+		}
 	}
 	free(buffer);
 	buffer = NULL;

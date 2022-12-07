@@ -25,15 +25,14 @@ int _str_n_cmp(char *s1, char *s2, int n)
  */
 int _printenv(void)
 {
-	char *str = environ[0];
-	int i = 0; /* Hostname printed twice if i is initalized 0 */
+	char **env;
 
-	while (str[i] != '\0')
+	env = environ;
+	while (*env)
 	{
-		write(1, str, strlen(str));
+		write(1, *env, sizeof(char) * _strlen(*env));
 		write(1, "\n", 1);
-		str = environ[i];
-		++i;
+		++env;
 	}
 	return (0);
 }
@@ -44,12 +43,12 @@ int _printenv(void)
  */
 char *_getenv(char *name)
 {
-	int len = strlen(name);
+	int len = _strlen(name);
 	int i;
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		if (strncmp(environ[i], name, len) == 0)
+		if (_str_n_cmp(environ[i], name, len) == 0)
 			return (&environ[i][len]);
 	}
 	return (NULL);
@@ -63,7 +62,7 @@ char *_getenv(char *name)
  */
 char *command_path(char *cmd)
 {
-	char *path = strdup(_getenv("PATH"));
+	char *path = _strdup(_getenv("PATH"));
 	char *token = strtok(path, ":"), *new_path;
 	char *path_array[100];
 	struct stat buf;
@@ -72,7 +71,7 @@ char *command_path(char *cmd)
 	new_path = malloc(sizeof(char) * 100);
 	if (_getenv("PATH")[0] == ':')
 		if (stat(cmd, &buf) == 0)
-			return (strdup(cmd));
+			return (_strdup(cmd));
 	while (token != NULL)
 	{
 		path_array[i] = token;
@@ -82,10 +81,10 @@ char *command_path(char *cmd)
 	i = 0;
 	while (path_array[i] != NULL)
 	{
-		strcpy(new_path, path_array[i]);
-		strcat(new_path, "/");
-		strcat(new_path, cmd);
-		strcat(new_path, "\0");
+		_strcpy(new_path, path_array[i]);
+		_strcat(new_path, "/");
+		_strcat(new_path, cmd);
+		_strcat(new_path, "\0");
 		if (stat(new_path, &buf) == 0)
 		{
 			free(path);
@@ -96,7 +95,7 @@ char *command_path(char *cmd)
 	free(path);
 	free(new_path);
 	if (stat(cmd, &buf) == 0)
-		return (strdup(cmd));
+		return (_strdup(cmd));
 	return (NULL);
 }
 
@@ -127,15 +126,16 @@ int execute(char *cmd_array[])
 	}
 	if (child_pid == 0)
 	{
-			exe = execve(exe_path, cmd_array, environ);
-			if (exe == -1)
-			{
-				write(2, "Coulnd't find command\n", 23);
-				return (1);
-			}
+		exe = execve(exe_path, cmd_array, environ);
+		if (exe == -1)
+		{
+			write(2, "Coulnd't find command\n", 23);
+			return (1);
+		}
 	}
 	else
 		wait(&status);
+	free(cmd);
 	free(exe_path);
 	return (0);
 }
