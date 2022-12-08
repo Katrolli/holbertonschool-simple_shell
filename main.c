@@ -79,7 +79,7 @@ int main(void)
 		{
 			free(buffer);
 			buffer = NULL;
-			break;
+			return (2);
 		}
 	}
 	free(buffer);
