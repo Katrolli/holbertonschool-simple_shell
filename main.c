@@ -19,7 +19,7 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
 	if (_strcmp(temp, "exit") == 0)
 	{
 		free(temp);
-		exit (2);
+		exit (0);
 	}
 	if (_strcmp(temp, "env") == 0)
 	{
@@ -79,7 +79,7 @@ int main(void)
 		{
 			free(buffer);
 			buffer = NULL;
-			return (0);
+			return (2);
 		}
 	}
 	free(buffer);
