@@ -119,8 +119,8 @@ int execute(char *cmd_array[])
 	exe_path = command_path(cmd);
 	if (exe_path == NULL)
 	{
-		write(2, "./hsh: 1: ", 12);
-		write(2, _strcat(cmd, ": Not found\n"), _strlen(cmd) + 12);
+		write(2, "./hsh: 1", 9);
+		write(2, _strcat(cmd, ": not found\n"), _strlen(cmd) + 12);
 		return (3);
 	}
 	pid = fork();
