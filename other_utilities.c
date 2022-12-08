@@ -97,6 +97,8 @@ char *command_path(char *cmd)
 	free(new_path);
 	if (stat(cmd, &buf) == 0)
 		return (_strdup(cmd));
+	write(1, cmd, _strlen(cmd) + 1);
+	write(1, ": Not found\n", 13);
 	free(cmd);
 	return (NULL);
 }
@@ -118,7 +120,6 @@ int execute(char *cmd_array[])
 	exe_path = command_path(cmd);
 	if (exe_path == NULL)
 	{
-		perror("wrong command");
 		return (3);
 	}
 	child_pid = fork();
