@@ -9,7 +9,6 @@
 int command_read(char *s, size_t __attribute__((unused)) characters)
 {
 	char *cmd_array[100];
-	const char delim[2] = " ";
 	char *token, *temp;
 	int i = 0;
 
@@ -27,11 +26,11 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
 		return (_printenv());
 	}
 	cmd_array[0] = NULL;
-	token = strtok(temp, delim);
+	token = strtok(temp, " ");
 	while (token != NULL)
 	{
 		cmd_array[i] = token;
-		token = strtok(NULL, delim);
+		token = strtok(NULL, " ");
 		i++;
 	}
 	if (cmd_array[0] == NULL)
@@ -48,12 +47,13 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
  * call functions to read the commands, locate them and then execute
  * Return: -1 on failure and 0 for exit
  */
-int main(void)
+int main(int __attribute__ ((unused)) argc, char *argv[])
 {
 	char *buffer;
 	size_t characters, size = 1024;
 	size_t i = 0, j = -1;
 
+	name = argv[0];
 	buffer = (char *)malloc(sizeof(char) * size);
 	if (buffer == NULL)
 	{
@@ -79,7 +79,7 @@ int main(void)
 		{
 			free(buffer);
 			buffer = NULL;
-			return (2);
+			return (0);
 		}
 	}
 	free(buffer);

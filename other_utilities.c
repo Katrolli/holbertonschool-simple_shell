@@ -91,6 +91,8 @@ char *command_path(char *cmd)
 			free(path);
 			return (new_path);
 		}
+		else
+			new_path[0] = 0;
 		i++;
 	}
 	free(path);
@@ -138,7 +140,6 @@ int execute(char *cmd_array[])
 	}
 	else
 		wait(&status);
-	free(cmd);
 	free(exe_path);
 	return (0);
 }
