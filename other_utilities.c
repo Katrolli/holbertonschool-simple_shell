@@ -127,7 +127,7 @@ int execute(char *cmd_array[])
 	child_pid = fork();
 	if (child_pid == -1)
 	{
-		return (1);
+		return (-1);
 	}
 	if (child_pid == 0)
 	{
@@ -140,6 +140,8 @@ int execute(char *cmd_array[])
 	}
 	else
 		wait(&status);
+	if (_strlen(cmd) > 10)
+		free(cmd);
 	free(exe_path);
 	return (0);
 }
