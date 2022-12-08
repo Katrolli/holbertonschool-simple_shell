@@ -99,8 +99,6 @@ char *command_path(char *cmd)
 	free(new_path);
 	if (stat(cmd, &buf) == 0)
 		return (_strdup(cmd));
-	write(1, cmd, _strlen(cmd) + 1);
-	write(1, ": Not found\n", 13);
 	return (NULL);
 }
 
