@@ -78,6 +78,7 @@ char *command_path(char *cmd)
 		i++;
 		token = strtok(NULL, ":");
 	}
+	path_array[i] = NULL;
 	i = 0;
 	while (path_array[i] != NULL)
 	{
@@ -96,6 +97,7 @@ char *command_path(char *cmd)
 	free(new_path);
 	if (stat(cmd, &buf) == 0)
 		return (_strdup(cmd));
+	free(cmd);
 	return (NULL);
 }
 
@@ -116,7 +118,7 @@ int execute(char *cmd_array[])
 	exe_path = command_path(cmd);
 	if (exe_path == NULL)
 	{
-		perror("wromng command");
+		perror("wrong command");
 		return (3);
 	}
 	child_pid = fork();

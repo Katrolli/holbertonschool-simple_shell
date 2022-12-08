@@ -1,0 +1,16 @@
+.\" Manpage for simple shell
+
+.TH man 1 "08 December 2022" "1.0" "simple man page"
+.SH NAME
+hsh \- execute shell commands
+.SH SYNOPSIS
+hsh
+.SH DESCRIPTION
+After entering the program using the command in the above, you can execute any command that is located in your /bin directory located in your path. The program can also take arguments for each command as an input.
+.SH OPTIONS
+The ./hsh does not take any options.
+.SH BUGS
+No known bugs.
+.SH AUTHORS
+Ennio Cano (ennio_cano@live.com)
+Fabio Hysollari (hysollari2@gmail.com)
