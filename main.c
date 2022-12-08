@@ -9,34 +9,26 @@
 int command_read(char *s, size_t __attribute__((unused)) characters)
 {
 	char *cmd_array[100];
-	char *token, *temp;
+	char *token = NULL;
 	int i = 0;
 
-	if (_strlen(s) == 0)
-		return (0);
-	temp = _strdup(s);
-	if (_strcmp(temp, "exit") == 0)
+	if (_strcmp(s, "exit") == 0)
 	{
-		free(temp);
 		return (2);
 	}
-	if (_strcmp(temp, "env") == 0)
+	if (_strcmp(s, "env") == 0)
 	{
-		free(temp);
 		return (_printenv());
 	}
 	cmd_array[0] = NULL;
-	token = strtok(temp, " ");
+	token = strtok(s, " ");
+	if (token == NULL)
+		return (0);
 	while (token != NULL)
 	{
 		cmd_array[i] = token;
-		token = strtok(NULL, " ");
 		i++;
-	}
-	if (cmd_array[0] == NULL)
-	{
-		free(temp);
-		return (0);
+		token = strtok(NULL, " ");
 	}
 	cmd_array[i] = NULL;
 	return (execute(cmd_array));
@@ -47,42 +39,35 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
  * call functions to read the commands, locate them and then execute
  * Return: -1 on failure and 0 for exit
  */
-int main(int __attribute__ ((unused)) argc, char *argv[])
+int main(int __attribute__((unused)) argc, char *argv[])
 {
-	char *buffer;
-	size_t characters, size = 1024;
-	size_t i = 0, j = -1;
+	char *line = NULL;
+	size_t buff_size = 0;
+	ssize_t characters = 0;
 
 	name = argv[0];
-	buffer = (char *)malloc(sizeof(char) * size);
-	if (buffer == NULL)
-	{
-		free(buffer);
-		return (-1);
-	}
-	while (i < 1)
+
+	while (1)
 	{
 		if (isatty(STDIN_FILENO) == 1)
 			write(1, "$ ", 2);
-		characters = getline(&buffer, &size, stdin);
-		if (characters == j)
+		characters = getline(&line, &buff_size, stdin);
+
+		if (characters == -1)
 		{
 			if (isatty(STDIN_FILENO) == 1)
-				write(1, "Unexplained Error", 18);
+				write(1, "\n", 1);
 			break;
 		}
-		if (*buffer == '\0')
+
+		if (line[characters - 1] == '\n')
+			line[characters - 1] = '\0';
+		if (*line == '\0')
 			continue;
-		if (buffer[characters - 1] == '\n')
-			buffer[characters - 1] = '\0';
-		if (command_read(buffer, characters) == 2)
-		{
-			free(buffer);
-			buffer = NULL;
-			return (0);
-		}
+		if (command_read(line, characters) == 2)
+			break;
 	}
-	free(buffer);
-	buffer = NULL;
+	free(line);
+	line = NULL;
 	return (0);
 }

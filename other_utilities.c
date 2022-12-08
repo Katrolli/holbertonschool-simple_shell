@@ -101,7 +101,6 @@ char *command_path(char *cmd)
 		return (_strdup(cmd));
 	write(1, cmd, _strlen(cmd) + 1);
 	write(1, ": Not found\n", 13);
-	free(cmd);
 	return (NULL);
 }
 
@@ -115,33 +114,30 @@ int execute(char *cmd_array[])
 {
 	char *exe_path = NULL;
 	char *cmd = NULL;
-	int exe, status;
-	pid_t child_pid;
+	pid_t pid;
+	int status;
 
 	cmd = cmd_array[0];
 	exe_path = command_path(cmd);
 	if (exe_path == NULL)
 	{
+		write(2, _strcat(cmd, ": Not found\n"), _strlen(cmd) + 12);
 		return (3);
 	}
-	child_pid = fork();
-	if (child_pid == -1)
+	pid = fork();
+	if (pid < 0)
 	{
+		perror("Error creating child\n");
 		return (-1);
 	}
-	if (child_pid == 0)
-	{
-		exe = execve(exe_path, cmd_array, environ);
-		if (exe == -1)
-		{
-			write(2, "Coulnd't find command\n", 23);
-			return (1);
-		}
-	}
-	else
+	if (pid > 0)
 		wait(&status);
-	if (_strlen(cmd) > 10)
-		free(cmd);
+	else if (pid == 0)
+	{
+		execve(exe_path, cmd_array, environ);
+		perror("Error");
+		exit(1);
+	}
 	free(exe_path);
 	return (0);
 }
