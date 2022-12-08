@@ -13,6 +13,8 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
 	char *token, *temp;
 	int i = 0;
 
+	if (_strlen(s) == 0)
+		return (0);
 	temp = _strdup(s);
 	if (_strcmp(temp, "exit") == 0)
 	{
@@ -24,12 +26,18 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
 		free(temp);
 		return (_printenv());
 	}
+	cmd_array[0] = NULL;
 	token = strtok(temp, delim);
 	while (token != NULL)
 	{
 		cmd_array[i] = token;
 		token = strtok(NULL, delim);
 		i++;
+	}
+	if (cmd_array[0] == NULL)
+	{
+		free(temp);
+		return (0);
 	}
 	cmd_array[i] = NULL;
 	return (execute(cmd_array));
