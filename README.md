@@ -1,6 +1,6 @@
 # Simple Shell
 
-A very basic Unix command line interpreter written in the C programming language as part of the Holberton-School curriculum.
+A very basic Unix command line Interpreter written in the C programming language as part of the Holberton-School curriculum.
 
 ## Description
 
