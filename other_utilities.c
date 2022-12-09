@@ -56,7 +56,7 @@ char *_getenv(char *name)
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		if (_str_n_cmp(environ[i], name, len) == 0)
+		if (_str_n_cmp(name, environ[i], len) == 0)
 			return (&environ[i][len]);
 	}
 	return (NULL);
