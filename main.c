@@ -75,6 +75,7 @@ int main(int __attribute__((unused)) argc, char *argv[])
 			break;
 		else if (read_value == 2 && flag == 1)
 			return 2;
+		flag = read_value;
 	}
 	free(line);
 	line = NULL;
