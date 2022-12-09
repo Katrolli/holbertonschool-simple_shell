@@ -31,7 +31,7 @@ $ ls
 AUTHORS  hsh  main.c  main.h  man_1_simple_shell  other_utilities.c  README.md	string_utilities.c
 $
 ```
-* Non-Interactive mode
+* Non-Interactive Mode
 ```
 echo "/bin/ls" | ./hsh
 AUTHORS  hsh  main.c  main.h  man_1_simple_shell  other_utilities.c  README.md	string_utilities.c
