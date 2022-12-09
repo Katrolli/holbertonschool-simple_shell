@@ -119,13 +119,6 @@ int execute(char *cmd_array[])
 	exe_path = command_path(cmd);
 	if (exe_path == NULL)
 	{
-<<<<<<< HEAD
-		write(2, "./hsh: 1: ", 10);
-		write(2, _strcat(cmd, ": not found\n"), _strlen(cmd) + 12);
-		free(cmd);
-		free(exe_path);
-		return (3);
-=======
 		write(STDERR_FILENO, name, _strlen(name));
 		write(STDERR_FILENO, ": 1: \n", 5);
 		write(STDERR_FILENO, cmd, _strlen(cmd));
@@ -133,7 +126,6 @@ int execute(char *cmd_array[])
 		free(exe_path);
 		free(cmd);
 		exit (127);
->>>>>>> testing
 	}
 	pid = fork();
 	if (pid < 0)
