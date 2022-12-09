@@ -42,18 +42,14 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
 /**
  * main - simple shell, allocate memory to get the user input,
  * call functions to read the commands, locate them and then execute
- * @argc: number of paramaters in the command line
- * @argv: array of paramaters in the command line
  * Return: -1 on failure and 0 for exit
  */
-int main(int __attribute__((unused)) argc, char *argv[])
+int main(void)
 {
 	char *line = NULL;
 	size_t buff_size = 0;
 	ssize_t characters = 0;
 	int read_value;
-
-	name = argv[0];
 
 	while (1)
 	{

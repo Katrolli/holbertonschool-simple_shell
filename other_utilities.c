@@ -127,7 +127,7 @@ int execute(char *cmd_array[])
 	exe_path = command_path(cmd);
 	if (exe_path == NULL)
 	{
-		write(STDERR_FILENO, name, _strlen(name));
+		write(STDERR_FILENO, "./hsh", 6);
 		write(STDERR_FILENO, ": 1: \n", 5);
 		write(STDERR_FILENO, cmd, _strlen(cmd));
 		write(STDERR_FILENO, ": not found\n", 12);
