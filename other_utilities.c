@@ -9,13 +9,21 @@
  */
 int _str_n_cmp(char *s1, char *s2, int n)
 {
-	int i = 0;
+	char c1, c2;
 
-	while (i < n)
+	while (n--)
 	{
-		if (s1[i] != s2[i])
-			return (-1);
-		i++;
+		c1 = *s1++;
+		c2 = *s2++;
+		if (c1 == '\0' || c1 != c2)
+		{
+			if (c1 > c2)
+				return (1);
+			if (c1 < c2)
+				return (-1);
+			else
+				return (0);
+		}
 	}
 	return (0);
 }
@@ -48,7 +56,7 @@ char *_getenv(char *name)
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		if (_str_n_cmp(environ[i], name, len) == 0)
+		if (_str_n_cmp(name, environ[i], len) == 0)
 			return (&environ[i][len]);
 	}
 	return (NULL);
@@ -113,19 +121,12 @@ int execute(char *cmd_array[])
 	char *exe_path = NULL;
 	char *cmd = NULL;
 	pid_t pid;
-	int status;
+	int status, exe = 0;
 
 	cmd = cmd_array[0];
 	exe_path = command_path(cmd);
 	if (exe_path == NULL)
 	{
-<<<<<<< HEAD
-		write(2, "./hsh: 1: ", 10);
-		write(2, _strcat(cmd, ": not found\n"), _strlen(cmd) + 12);
-		free(cmd);
-		free(exe_path);
-		return (3);
-=======
 		write(STDERR_FILENO, name, _strlen(name));
 		write(STDERR_FILENO, ": 1: \n", 5);
 		write(STDERR_FILENO, cmd, _strlen(cmd));
@@ -133,7 +134,6 @@ int execute(char *cmd_array[])
 		free(exe_path);
 		free(cmd);
 		exit (127);
->>>>>>> testing
 	}
 	pid = fork();
 	if (pid < 0)
@@ -147,13 +147,11 @@ int execute(char *cmd_array[])
 	{
 		if (environ)
 		{
-			execve(exe_path, cmd_array, environ);
-			perror("Error");
-			exit(1);
+			exe = execve(exe_path, cmd_array, environ);
 		}
 		else
 			execve(exe_path, cmd_array, NULL);
 	}
 	free(exe_path);
-	return (0);
+	return (1);
 }
