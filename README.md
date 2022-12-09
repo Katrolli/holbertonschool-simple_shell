@@ -16,7 +16,7 @@ AUTHORS  hsh  main.c  main.h  other_utilities.c  README.md  string_utilities.c
 $ 
 ```
 
-* The user is then promted again after each command has been executed
+* The user is promted again after each command has been executed
 * If the executable program is not found, prints an error message and exits the program
 ```
 $ hi
