@@ -49,7 +49,7 @@ int main(int __attribute__((unused)) argc, char *argv[])
 	char *line = NULL;
 	size_t buff_size = 0;
 	ssize_t characters = 0;
-	int read_value;
+	int read_value, flag;
 
 	name = argv[0];
 
@@ -71,9 +71,9 @@ int main(int __attribute__((unused)) argc, char *argv[])
 		if (*line == '\0')
 			continue;
 		read_value = command_read(line, characters);
-		if (read_value == 2)
+		if (read_value == 2 && flag != 1)
 			break;
-		else if (read_value == 1)
+		else if (read_value == 2 && flag == 1)
 			return 2;
 	}
 	free(line);
