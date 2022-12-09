@@ -68,10 +68,10 @@ char *command_path(char *cmd)
 	struct stat buf;
 	int i = 0;
 
-	new_path = malloc(sizeof(char) * 100);
 	if (path == NULL)
 		if (stat(cmd, &buf) == 0)
 			return (_strdup(cmd));
+	new_path = malloc(sizeof(char) * 100);
 	while (token != NULL)
 	{
 		path_array[i] = token;
