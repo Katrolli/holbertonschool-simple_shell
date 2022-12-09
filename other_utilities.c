@@ -133,9 +133,14 @@ int execute(char *cmd_array[])
 		wait(&status);
 	else if (pid == 0)
 	{
-		execve(exe_path, cmd_array, environ);
-		perror("Error");
-		exit(1);
+		if (environ)
+		{
+			execve(exe_path, cmd_array, environ);
+			perror("Error");
+			exit(1);
+		}
+		else
+			execve(exe_path, cmd_array, NULL);
 	}
 	free(exe_path);
 	return (0);
