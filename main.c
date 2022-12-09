@@ -41,6 +41,8 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
 
 /**
  * main - simple shell, allocate memory to get the user input,
+ * @argc: num
+ * @argv: argument name
  * call functions to read the commands, locate them and then execute
  * Return: -1 on failure and 0 for exit
  */
