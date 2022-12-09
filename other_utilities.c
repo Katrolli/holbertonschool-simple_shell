@@ -9,13 +9,21 @@
  */
 int _str_n_cmp(char *s1, char *s2, int n)
 {
-	int i = 0;
+	char c1, c2;
 
-	while (i < n)
+	while (n--)
 	{
-		if (s1[i] != s2[i])
-			return (-1);
-		i++;
+		c1 = *s1++;
+		c2 = *s2++;
+		if (c1 == '\0' || c1 != c2)
+		{
+			if (c1 > c2)
+				return (1);
+			if (c1 < c2)
+				return (-1);
+			else
+				return (0);
+		}
 	}
 	return (0);
 }
