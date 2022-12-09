@@ -24,7 +24,7 @@ $ hi
 root@bab1fb24f903:~/holbertonschool-simple_shell#
 ```
 The program works in both interactive and non-interactive mode:
-* Interactive mode 
+* Interactive Mode 
 ```
 ./hsh 
 $ ls
