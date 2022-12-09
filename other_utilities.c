@@ -133,7 +133,7 @@ int execute(char *cmd_array[])
 		write(STDERR_FILENO, ": not found\n", 12);
 		free(exe_path);
 		free(cmd);
-		exit (127);
+		exit(127);
 	}
 	pid = fork();
 	if (pid < 0)

@@ -42,6 +42,8 @@ int command_read(char *s, size_t __attribute__((unused)) characters)
 /**
  * main - simple shell, allocate memory to get the user input,
  * call functions to read the commands, locate them and then execute
+ * @argc: number of paramaters in the command line
+ * @argv: array of paramaters in the command line
  * Return: -1 on failure and 0 for exit
  */
 int main(int __attribute__((unused)) argc, char *argv[])
@@ -74,7 +76,7 @@ int main(int __attribute__((unused)) argc, char *argv[])
 		if (read_value == 2)
 			break;
 		else if (read_value == 1)
-			return 2;
+			return (2);
 	}
 	free(line);
 	line = NULL;
