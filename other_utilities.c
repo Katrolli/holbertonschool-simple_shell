@@ -121,7 +121,7 @@ int execute(char *cmd_array[])
 	char *exe_path = NULL;
 	char *cmd = NULL;
 	pid_t pid;
-	int status, exe = 0;
+	int status;
 
 	cmd = cmd_array[0];
 	exe_path = command_path(cmd);
@@ -147,7 +147,7 @@ int execute(char *cmd_array[])
 	{
 		if (environ)
 		{
-			exe = execve(exe_path, cmd_array, environ);
+			execve(exe_path, cmd_array, environ);
 		}
 		else
 			execve(exe_path, cmd_array, NULL);
