@@ -6,7 +6,7 @@ A very basic Unix command line Interpreter written in C programming language as 
 
 This version of the **Simple Shell** can do the following :
 
-* Display a promt ($ ) and waits for the user to input the command :
+* Displays a promt ($ ) and waits for the user to input the command :
  
 
 ```bash
