@@ -73,7 +73,7 @@ int main(int __attribute__((unused)) argc, char *argv[])
 		read_value = command_read(line, characters);
 		if (read_value == 2)
 			break;
-		else if (read_value == -1)
+		else if (read_value == 1)
 			return 2;
 	}
 	free(line);
