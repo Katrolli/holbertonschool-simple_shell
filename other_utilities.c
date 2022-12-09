@@ -121,6 +121,8 @@ int execute(char *cmd_array[])
 	{
 		write(2, "./hsh: 1: ", 10);
 		write(2, _strcat(cmd, ": not found\n"), _strlen(cmd) + 12);
+		free(cmd);
+		free(exe_path);
 		return (3);
 	}
 	pid = fork();
